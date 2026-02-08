@@ -1,9 +1,9 @@
-import instance from "../../axiosConfig";
 import React, { useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Classes from "./SignUp.module.css";
+import instance from "../../axiosConfig";
+import styles from "./SignUp.module.css";
 
-const Register = () => {
+const SignUp = () => {
   const navigate = useNavigate();
 
   const userNameDom = useRef();
@@ -69,99 +69,89 @@ const Register = () => {
   };
 
   return (
-    <section className={Classes.registerSection}>
-      <h2>Join the network</h2>
-      <p className={Classes.signInPrompt}>
+    <div className={styles.card}>
+      <h2 className={styles.title}>Join the network</h2>
+      <p className={styles.signupText}>
         Already have an account?{" "}
-        <Link to="/login" className={Classes.signInLink}>
-          Sign in
-        </Link>
+        <span onClick={() => navigate("/login")}>Sign in</span>
       </p>
 
-      {errors.server && <p className={Classes.serverError}>{errors.server}</p>}
+      {errors.server && <p className={styles.error}>{errors.server}</p>}
 
-      <form className={Classes.registerForm} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
+          className={`${styles.input} ${errors.username ? styles.inputError : ""}`}
           type="text"
           placeholder="Username"
           ref={userNameDom}
-          className={errors.username ? Classes.inputError : ""}
         />
-        {errors.username && (
-          <small className={Classes.error}>{errors.username}</small>
-        )}
+        {errors.username && <p className={styles.error}>{errors.username}</p>}
 
-        <div className={Classes.nameRow}>
-          <input
-            type="text"
-            placeholder="First name"
-            ref={firstNameDom}
-            className={errors.firstname ? Classes.inputError : ""}
-          />
-          <input
-            type="text"
-            placeholder="Last name"
-            ref={lastNameDom}
-            className={errors.lastname ? Classes.inputError : ""}
-          />
+        <div className={styles.nameRow}>
+          <div className={styles.nameGroup}>
+            <input
+              className={`${styles.input} ${errors.firstname ? styles.inputError : ""}`}
+              type="text"
+              placeholder="First name"
+              ref={firstNameDom}
+            />
+            {errors.firstname && (
+              <p className={styles.error}>{errors.firstname}</p>
+            )}
+          </div>
+
+          <div className={styles.nameGroup}>
+            <input
+              className={`${styles.input} ${errors.lastname ? styles.inputError : ""}`}
+              type="text"
+              placeholder="Last name"
+              ref={lastNameDom}
+            />
+            {errors.lastname && (
+              <p className={styles.error}>{errors.lastname}</p>
+            )}
+          </div>
         </div>
-        {errors.firstname && (
-          <small className={Classes.error}>{errors.firstname}</small>
-        )}
-        {errors.lastname && (
-          <small className={Classes.error}>{errors.lastname}</small>
-        )}
 
         <input
+          className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
           type="email"
           placeholder="Email address"
           ref={emailDom}
-          className={errors.email ? Classes.inputError : ""}
         />
-        {errors.email && (
-          <small className={Classes.error}>{errors.email}</small>
-        )}
+        {errors.email && <p className={styles.error}>{errors.email}</p>}
 
-        <div className={Classes.passwordWrapper}>
+        <div className={styles.passwordGroup}>
           <input
+            className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             ref={passwordDom}
-            className={errors.password ? Classes.inputError : ""}
           />
           <span
-            className={Classes.togglePassword}
+            className={styles.eye}
             onClick={() => setShowPassword((prev) => !prev)}
           >
-            {showPassword ? "🙈" : "👁️"}
+            {showPassword ? "🙈" : "👁"}
           </span>
         </div>
-        {errors.password && (
-          <small className={Classes.error}>{errors.password}</small>
-        )}
+        {errors.password && <p className={styles.error}>{errors.password}</p>}
 
-        <p className={Classes.agreement}>
-          I agree to the{" "}
-          <a href="/privacy-policy" target="_blank">
-            privacy policy
-          </a>{" "}
-          and{" "}
-          <a href="/terms-of-service" target="_blank">
-            terms of service
-          </a>
-          .
+        <p className={styles.agreement}>
+          I agree to the <a href="/privacy-policy">privacy policy</a> and{" "}
+          <a href="/terms-of-service">terms of service</a>.
         </p>
 
-        <button type="submit" className={Classes.submitBtn}>
+        <button type="submit" className={styles.submitBtn}>
           Agree and Join
         </button>
       </form>
 
-      <p className={Classes.loginText}>
-        Already have an account? <Link to="/login">Login</Link>
+      <p className={styles.create} onClick={() => navigate("/login")}>
+        Already have an account? Login
       </p>
-    </section>
+    </div>
   );
 };
 
-export default Register;
+export default SignUp;

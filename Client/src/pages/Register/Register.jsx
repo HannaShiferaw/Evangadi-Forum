@@ -1,19 +1,24 @@
 import React from 'react';
-import Classes from './Register.module.css'
+import styles from './Register.module.css'
 import SignUp from '../../components/SignUp/SignUp'
 import About from '../../components/About/About'
 const Register = () => {
   return (
-    <section className={Classes.home_container}>
-      <div className={Classes.home_wrapper}>
-        <div className={Classes.register_column}>
+    <main className={styles.loginPage}>
+      <div className={styles.loginContent}>
+        <div className={styles.signInSection}>
           <SignUp />
         </div>
-        <div className={Classes.about_column}>
-          <About />
+
+        {/* About Section */}
+        <div className={styles.aboutWrapper}>
+          <div className={styles.bgShape}></div>
+          <div className={styles.aboutContent}>
+            <About/>
+          </div>
         </div>
       </div>
-    </section>
+    </main>
   );
 };
 
